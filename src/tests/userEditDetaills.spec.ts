@@ -43,7 +43,8 @@ test("User Profile Update Nickname Automation Test", async ({ page }) => {
 
 test.afterEach('go back to lobby and print coins amount' ,async ({}) => {
    await myAccountPage.exitMyProfilePage();
-   await myAccountPage.exitMyAccountPage();
+   await myAccountPage.exityAccountPage();
  
    await homePage.amountUserCoinsBothTypes();
+
 });

@@ -18,6 +18,7 @@ export class HomePage {
     const secondModeUserCoins = await this.page.locator(homePageLocators.coinsAmount).textContent();
   
     console.log(`first mode user coins amount is ${firstModeUserCoins} `);
-    console.log(`second mode user coins amount is ${secondModeUserCoins}`); 
+    console.log(`second mode user coins amount is ${secondModeUserCoins}`);
+    await this.page.locator(homePageLocators.switchModeButton).click(); 
    }
 }
