@@ -15,10 +15,17 @@ export class HomePage {
   async amountUserCoinsBothTypes(): Promise<void> {
     const firstModeUserCoins = await this.page.locator(homePageLocators.coinsAmount).textContent(); 
     await this.page.locator(homePageLocators.switchModeButton).click();
-    const secondModeUserCoins = await this.page.locator(homePageLocators.coinsAmount).textContent();
-  
+    let secondModeUserCoinsPrev = await this.page.locator(homePageLocators.coinsAmount).textContent();
+    let secondModeUserCoinsCurrent = await this.page.locator(homePageLocators.coinsAmount).textContent();
+
+    while (secondModeUserCoinsPrev !== secondModeUserCoinsCurrent) {
+      await this.page.waitForTimeout(500);
+      secondModeUserCoinsPrev=secondModeUserCoinsCurrent;
+      secondModeUserCoinsCurrent = await this.page.locator(homePageLocators.coinsAmount).textContent();
+    } 
+    
     console.log(`first mode user coins amount is ${firstModeUserCoins} `);
-    console.log(`second mode user coins amount is ${secondModeUserCoins}`);
+    console.log(`second mode user coins amount is ${secondModeUserCoinsCurrent}`);
     await this.page.locator(homePageLocators.switchModeButton).click(); 
    }
 }
