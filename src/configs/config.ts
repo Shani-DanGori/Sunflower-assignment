@@ -1,7 +1,6 @@
 export const userDataConfig = {
     email: 'watchdogstest02+11@sunfltd.com',
-    password: '123456',
-    newUsername: 'nerwNickName',
+    password: '123456'
   };
 
 export const baseConfig = {

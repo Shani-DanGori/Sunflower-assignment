@@ -2,7 +2,7 @@ import {
   baseConfig,
   myAccountPageLocators,
   userDataConfig,
-} from "../configs/config";
+} from "../src/configs/config";
 import { HomePage } from "../pages/homePage";
 import { LoginPage } from "../pages/logInPage";
 import { test, expect } from "@playwright/test";
@@ -12,7 +12,6 @@ import { EditUserDetailsPage } from "../pages/editUserDetailsPage";
 let homePage: HomePage;
 let myAccountPage: MyAccountPage;
 let editUserDetailsPage: EditUserDetailsPage;
-let newRandomUserName : string;
 
 test.beforeEach('log in' ,async ({page}) => {
   await page.goto(baseConfig.baseUrl);
@@ -23,24 +22,23 @@ test.beforeEach('log in' ,async ({page}) => {
   homePage = new HomePage(page);
   myAccountPage = new MyAccountPage(page);
   editUserDetailsPage = new EditUserDetailsPage(page);
-  newRandomUserName = editUserDetailsPage.randomUserName();  
 });
 
-test("User Profile Update Nickname Automation Test", async ({ page }) => {
+test("User Profile Update Automation Test", async ({ page }) => {
   await homePage.enterMenu();
 
   await homePage.openMyAccount();
 
   await myAccountPage.editUserDetails();
 
-  await editUserDetailsPage.updateUserName(newRandomUserName);
+  await editUserDetailsPage.updateUserName(userDataConfig.newUsername);
 
   await editUserDetailsPage.updateRandomAvatar();
 
   await myAccountPage.enterMyProfilePage();
 
   expect(await page.locator(myAccountPageLocators.myProfileNickName).textContent()
-  ).toBe(newRandomUserName);
+  ).toBe(userDataConfig.newUsername);
 });
 
 test.afterEach('go back to lobby and print coins amount' ,async ({}) => {
@@ -48,5 +46,4 @@ test.afterEach('go back to lobby and print coins amount' ,async ({}) => {
    await myAccountPage.exitMyAccountPage();
  
    await homePage.amountUserCoinsBothTypes();
-   
 });
